@@ -8,7 +8,7 @@
 #include "stb_image_write.h"
 using namespace std;
 
-int mainOne() {
+int main() {
 	
 	int nx = 200;
 	int ny = 100;

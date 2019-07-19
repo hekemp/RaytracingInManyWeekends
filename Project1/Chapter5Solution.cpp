@@ -1,5 +1,4 @@
 /*
-
 #include <cstdio>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -7,10 +6,17 @@
 #include <string> 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
-#include "ray.h"
+#include "sphere.h"
+#include "hitable_list.h"
+#include "float.h"
+
 using namespace std;
 
-vec3 color(const ray& r) {
+vec3 color(const ray& r, hitable *world) {
+	hit_record rec;
+	if (world->hit(r, 0.0f, FLT_MAX, rec)) {
+		return 0.5f * vec3((rec.normal.x() + 1), (rec.normal.y() + 1), (rec.normal.z() + 1));
+	}
 	vec3 unit_direction = unit_vector(r.direction());
 	float t = 0.5f * (unit_direction.y() + 1.0f);
 	return (1.0f - t) * vec3(1.0f, 1.0f, 1.0f) + (t * vec3(0.5f, 0.7f, 1.0f));
@@ -29,6 +35,11 @@ int main() {
 	vec3 vertical(0.0, 2.0, 0.0);
 	vec3 origin(0.0, 0.0, 0.0);
 
+	hitable *list[2];
+	list[0] = new sphere(vec3(0, 0, -1), 0.5f);
+	list[1] = new sphere(vec3(0, -100.5f, -1), 100);
+	hitable *world = new hitable_list(list, 2);
+
 	for (int j = 0; j < ny; j++) {
 		for (int i = 0; i < nx; i++) {
 
@@ -36,7 +47,9 @@ int main() {
 			float v = float(j) / float(ny);
 
 			ray r(origin, lower_left_corner + (u * horizontal) + (v * vertical));
-			vec3 col = color(r);
+			
+			vec3 p = r.point_at_parameter(2.0f);
+			vec3 col = color(r, world);
 
 			int ir = int(255.00 * col[0]);
 			int ig = int(255.00 * col[1]);

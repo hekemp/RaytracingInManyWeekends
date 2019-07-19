@@ -9,7 +9,7 @@
 #include "vec3.h"
 using namespace std;
 
-int mainTwo() {
+int main() {
 	
 	int nx = 200;
 	int ny = 100;
