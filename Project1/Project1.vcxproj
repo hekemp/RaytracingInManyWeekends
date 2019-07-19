@@ -119,6 +119,7 @@
     <ClCompile Include="Chapter2Solution.cpp" />
     <ClCompile Include="Chapter3Solution.cpp" />
     <ClCompile Include="Chapter4Solution.cpp" />
+    <ClCompile Include="Chapter5Solution.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
