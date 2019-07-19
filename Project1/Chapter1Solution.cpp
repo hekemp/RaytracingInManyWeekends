@@ -1,7 +1,10 @@
+/* 
 #include <cstdio>
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include <stdio.h>
 #include <string> 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 using namespace std;
 
@@ -37,3 +40,4 @@ int mainOne() {
 	return 0;
 
 }
+*/

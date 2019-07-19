@@ -1,4 +1,5 @@
 /*
+
 #include <cstdio>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -6,10 +7,16 @@
 #include <string> 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
-#include "vec3.h"
+#include "ray.h"
 using namespace std;
 
-int mainTwo() {
+vec3 color(const ray& r) {
+	vec3 unit_direction = unit_vector(r.direction());
+	float t = 0.5f * (unit_direction.y() + 1.0f);
+	return (1.0f - t) * vec3(1.0f, 1.0f, 1.0f) + (t * vec3(0.5f, 0.7f, 1.0f));
+}
+
+int mainThree() {
 	
 	int nx = 200;
 	int ny = 100;
@@ -17,9 +24,19 @@ int mainTwo() {
 
 	uint8_t* data = new uint8_t[nx * ny * channels];
 
+	vec3 lower_left_corner(-2.0, -1.0, -1.0);
+	vec3 horizontal(4.0, 0.0, 0.0);
+	vec3 vertical(0.0, 2.0, 0.0);
+	vec3 origin(0.0, 0.0, 0.0);
+
 	for (int j = 0; j < ny; j++) {
 		for (int i = 0; i < nx; i++) {
-			vec3 col(float(i) / float(nx), float(j) / float(ny), 0.2f);
+
+			float u = float(i) / float(nx);
+			float v = float(j) / float(ny);
+
+			ray r(origin, lower_left_corner + (u * horizontal) + (v * vertical));
+			vec3 col = color(r);
 
 			int ir = int(255.00 * col[0]);
 			int ig = int(255.00 * col[1]);
