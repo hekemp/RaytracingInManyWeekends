@@ -64,6 +64,8 @@ int main() {
 
 			col /= float(ns);
 
+			col = vec3( sqrt(col[0]), sqrt(col[1]), sqrt(col[2]) );
+
 			int ir = int(255.00 * col[0]);
 			int ig = int(255.00 * col[1]);
 			int ib = int(255.00 * col[2]);
