@@ -3,12 +3,19 @@
 
 #include "ray.h"
 
+#ifndef M_PI
+#define M_PI           3.14159265358979323846
+#endif
+
 class camera {
 public: 
-	camera() {
-		lower_left_corner = vec3(-2.0f, -1.0f, -1.0f);
-		horizontal = vec3(4.0f, 0.0f, 0.0f);
-		vertical = vec3(0.0f, 2.0f, 0.0f);
+	camera(float vfov, float aspect) { // vfov is top to bottom in degrees
+		float theta = vfov * float(M_PI) / 180;
+		float half_height = tan(theta / 2);
+		float half_width = aspect * half_height;
+		lower_left_corner = vec3(-half_width, -half_height, -1.0f);
+		horizontal = vec3(2*half_width, 0.0f, 0.0f);
+		vertical = vec3(0.0f, 2 * half_height, 0.0f);
 		origin = vec3(0.0f, 0.0f, 0.0f);
 	}
 
