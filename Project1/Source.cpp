@@ -39,12 +39,13 @@ int main() {
 
 	uint8_t* data = new uint8_t[nx * ny * channels];
 
-	hitable *list[4];
+	hitable *list[5];
 	list[0] = new sphere(vec3(0, 0, -1), 0.5f, new lambertian(vec3(0.1f, 0.2f, 0.5f)));
 	list[1] = new sphere(vec3(0, -100.5f, -1), 100, new lambertian(vec3(0.8f, 0.8f, 0.0f)));
 	list[2] = new sphere(vec3(1, 0, -1), 0.5f, new metal(vec3(0.8f, 0.6f, 0.2f), 0.3f));
 	list[3] = new sphere(vec3(-1, 0, -1), 0.5f, new dielectric(1.5f));
-	hitable *world = new hitable_list(list, 4);
+	list[4] = new sphere(vec3(-1, 0, -1), -0.45f, new dielectric(1.5f));
+	hitable *world = new hitable_list(list, 5);
 
 	camera cam;
 

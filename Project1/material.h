@@ -50,6 +50,12 @@ bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted) {
 	return false;
 }
 
+float schlick(float cosine, float ref_idx) {
+	float r0 = (1 - ref_idx) / (1 + ref_idx);
+	r0 = r0 * r0;
+	return r0 + (1 - r0) * pow((1 - cosine), 5);
+}
+
 class metal : public material {
 public:
 	metal(const vec3& a, float f) : albedo(a) { if (f < 1) fuzz = f; else fuzz = 1.0f; }
@@ -72,24 +78,25 @@ public:
 		float ni_over_nt;
 		attenuation = vec3(1.0f, 1.0f, 1.0f);
 		vec3 refracted;
+		float reflect_prob;
+		float cosine;
 		if (dot(r_in.direction(), rec.normal) > 0) {
 			outward_normal = -rec.normal;
 			ni_over_nt = ref_idx;
+			cosine = ref_idx * dot(r_in.direction(), rec.normal) / r_in.direction().length();
 		}
 		else {
 			outward_normal = rec.normal;
 			ni_over_nt = 1.0f / ref_idx;
+			cosine = -dot(r_in.direction(), rec.normal) / r_in.direction().length();
 		}
 
-		if (refract(r_in.direction(), outward_normal, ni_over_nt, refracted)) {
-			scattered = ray(rec.p, refracted);
-		}
-		else {
-			scattered = ray(rec.p, reflected);
-			return false;
-		}
+		reflect_prob = refract(r_in.direction(), outward_normal, ni_over_nt, refracted) ? schlick(cosine, ref_idx) : 1.0f;
+		scattered = drand48() < reflect_prob ? ray(rec.p, reflected) : ray(rec.p, refracted);
+
 		return true;
 	}
+
 	float ref_idx;
 };
 
