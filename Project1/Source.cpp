@@ -10,6 +10,7 @@
 #include "hitable_list.h"
 #include "float.h"
 #include "camera.h"
+#define drand48() (double)rand() / RAND_MAX
 
 using namespace std;
 
@@ -45,8 +46,8 @@ int main() {
 			vec3 col(0, 0, 0);
 
 			for (int s = 0; s < ns; s++) {
-				float u = float(i + .5f) / float(nx);
-				float v = float(j + .5f) / float(ny);
+				float u = float(i + drand48()) / float(nx);
+				float v = float(j + drand48()) / float(ny);
 				ray r = cam.get_ray(u, v);
 				vec3 p = r.point_at_parameter(2.0f);
 				col += color(r, world);
