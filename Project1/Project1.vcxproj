@@ -120,6 +120,7 @@
     <ClCompile Include="Chapter3Solution.cpp" />
     <ClCompile Include="Chapter4Solution.cpp" />
     <ClCompile Include="Chapter5Solution.cpp" />
+    <ClCompile Include="Chapter6Solution.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>

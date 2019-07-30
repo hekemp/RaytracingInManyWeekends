@@ -33,6 +33,9 @@
     <ClCompile Include="Chapter5Solution.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Chapter6Solution.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image_write.h">
