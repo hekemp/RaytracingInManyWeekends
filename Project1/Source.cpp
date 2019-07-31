@@ -39,14 +39,18 @@ int main() {
 
 	uint8_t* data = new uint8_t[nx * ny * channels];
 
-	hitable *list[2];
+	hitable *list[5];
 
-	float R = float(cos(M_PI / 4));
-	list[0] = new sphere(vec3(-R, 0, -1), R, new lambertian(vec3(0, 0, 1)));
-	list[1] = new sphere(vec3(R, 0, -1), R, new lambertian(vec3(1, 0, 0)));
-	hitable *world = new hitable_list(list, 2);
+	list[0] = new sphere(vec3(0, 0, -1), 0.5f, new lambertian(vec3(0.1f, 0.2f, 0.5f)));
+	list[1] = new sphere(vec3(0, -100.5f, -1), 100, new lambertian(vec3(0.8f, 0.8f, 0.0f)));
+	list[2] = new sphere(vec3(1, 0, -1), 0.5f, new metal(vec3(0.8f, 0.6f, 0.2f), 0.3f));
+	list[3] = new sphere(vec3(-1, 0, -1), 0.5f, new dielectric(1.5));
+	list[4] = new sphere(vec3(-1, 0, -1), -0.45f, new dielectric(1.5));
 
-	camera cam(90, float(nx)/float(ny));
+	hitable *world = new hitable_list(list, 5);
+
+	//camera cam(vec3(-2, 2, 1), vec3(0, 0, -1), vec3(0, 1, 0), 90, float(nx)/float(ny));
+	camera cam(vec3(-2, 2, 1), vec3(0, 0, -1), vec3(0, 1, 0), 45, float(nx)/float(ny));
 
 	for (int j = 0; j < ny; j++) {
 		for (int i = 0; i < nx; i++) {
